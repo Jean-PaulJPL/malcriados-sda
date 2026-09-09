@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuestas del Salón - SDA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #38bdf8;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --gold-color: #fbbf24;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            max-width: 700px;
+            width: 100%;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-color);
+        }
+
+        .header-logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header-logo img {
+            max-width: 120px;
+            height: auto;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 5px;
+        }
+
+        /* Banner del Profesor con Imagen de Fondo */
+        .profe-banner {
+            position: relative;
+            background-image: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.85)), url('profe.jpg');
+            background-size: cover;
+            background-position: center 25%;
+            border: 2px solid var(--gold-color);
+            border-radius: 14px;
+            padding: 35px 20px;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 6px 20px rgba(251, 191, 36, 0.2);
+            overflow: hidden;
+        }
+
+        .profe-img {
+            width: 130px;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid var(--gold-color);
+            margin-bottom: 12px;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+        }
+
+        .profe-banner h3 {
+            color: var(--gold-color);
+            font-size: 1.3rem;
+            margin-bottom: 6px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .profe-banner p {
+            color: #e2e8f0;
+            font-size: 0.95rem;
+            font-style: italic;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+        }
+
+        p.subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+        }
+
+        .survey-group {
+            margin-bottom: 24px;
+            background: #0f172a;
+            padding: 18px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .survey-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 10px;
+            color: #f1f5f9;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            background-color: #1e293b;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .btn-submit, .btn-reset {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #38bdf8, #0284c7);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-reset {
+            background: linear-gradient(135deg, #ef4444, #b91c1c);
+            margin-top: 15px;
+        }
+
+        #reporte {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .result-card {
+            background-color: #0f172a;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .result-card h3 {
+            font-size: 1.1rem;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .votos-list {
+            list-style: none;
+            max-height: 200px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .votos-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px rgba(255, 255, 255, 0.05) solid;
+            font-size: 0.95rem;
+        }
+
+        .votos-list li span.votos-num {
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Logo del Colegio -->
+        <div class="header-logo">
+            <img src="logo.png" alt="Logo Colegio SDA">
+        </div>
+
+        <!-- Banner con la Foto del Profesor de Fondo -->
+        <div class="profe-banner">
+            <img src="profe.jpg" alt="Profesor SDA" class="profe-img">
+            <h3>Nuestro Amado y Guapazo Profesor</h3>
+            <p>Supervisando el desarrollo del aula y el cómputo del salón</p>
+        </div>
+
+        <!-- Formulario -->
+        <div id="seccionEncuesta">
+            <h1>Encuesta Escolar del Salón</h1>
+            <p class="subtitle">Colegio SDA - Elige a un alumno para cada categoría</p>
+
+            <form id="encuestaForm">
+                <div class="survey-group">
+                    <label for="encuesta1">1. ¿Quién hace más desorden?</label>
+                    <select id="encuesta1" required>
+                        <option value="" disabled selected>-- Selecciona un alumno --</option>
+                    </select>
+                </div>
+
+                <div class="survey-group">
+                    <label for="encuesta2">2. ¿Quién se comporta mejor?</label>
+                    <select id="encuesta2" required>
+                        <option value="" disabled selected>-- Selecciona un alumno --</option>
+                    </select>
+                </div>
+
+                <div class="survey-group">
+                    <label for="encuesta3">3. ¿Quién es el más burro?</label>
+                    <select id="encuesta3" required>
+                        <option value="" disabled selected>-- Selecciona un alumno --</option>
+                    </select>
+                </div>
+
+                <div class="survey-group">
+                    <label for="encuesta4">4. ¿Quién colabora más con el salón? (EXTRA)</label>
+                    <select id="encuesta4" required>
+                        <option value="" disabled selected>-- Selecciona un alumno --</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-submit">Guardar Voto y Ver Resultados</button>
+            </form>
+        </div>
+
+        <!-- Resultados y Conteo de Votos -->
+        <div id="reporte">
+            <h2>Tabla General de Votos</h2>
+            <p class="subtitle">Conteo individual acumulado de votos por categoría</p>
+
+            <div class="result-card">
+                <h3>1. ¿Quién hace más desorden?</h3>
+                <ul id="lista1" class="votos-list"></ul>
+            </div>
+
+            <div class="result-card">
+                <h3>2. ¿Quién se comporta mejor?</h3>
+                <ul id="lista2" class="votos-list"></ul>
+            </div>
+
+            <div class="result-card">
+                <h3>3. ¿Quién es el más burro?</h3>
+                <ul id="lista3" class="votos-list"></ul>
+            </div>
+
+            <div class="result-card">
+                <h3>4. ¿Quién colabora más con el salón?</h3>
+                <ul id="lista4" class="votos-list"></ul>
+            </div>
+
+            <button onclick="volverAEncuestar()" class="btn-submit">Votar de nuevo</button>
+            <button onclick="reiniciarConteo()" class="btn-reset">Borrar todos los votos</button>
+        </div>
+    </div>
+
+    <script>
+        const alumnos = [
+            "Letizia Del Rosario BARDALES TORREJÓN", "Valezka Begoña BARRERA VARGAS",
+            "Thiago Athirson BAZALAR BOBBIO", "Daniela Nicol CABEZUDO SEVILLANO",
+            "Luis Alejandro CAMPOS VILLACORTA", "Estefano CARRASCO ANDRADE",
+            "Valentino CARRASCO ANDRADE", "Sophia Isabelle CASTILLO BARRETO",
+            "Percy Paolo CHAVEZ POZADA", "Fabio Stphano DEL PINO CORDOVA",
+            "Ryan John EDMONDS MARATUECH", "Alfredo Domenico FORTUNIC HERNANDEZ",
+            "Jean Paul JHON LLERENA", "Ariana Isabella MARTINEZ PAREDES",
+            "Mathias Fabrizio MENDOZA MARQUEZ", "Mía Alejandra MOSCA ESCALANTE",
+            "Daniel Leonardo NATIVIDAD REY", "Diego Enrique NUÑEZ FERNANDEZ",
+            "Jim Adrián PALMA RIVERA", "Barisha PEREZ GIL",
+            "Vania Valentina PEREZ PEREZ", "Fernanda Graciela PRINQUE CONNINGHAN",
+            "Amy Alexandra QUISPE AYLLON", "Bianca Fiore RAMIREZ ESPINOZA",
+            "Miguel Uriel REYNA REBAZA", "Rafaela Del Socorro RODRÍGUEZ CHIÚ",
+            "Ana Lucia SALINAS CASTILLO", "Enzo Ozmar YONG ULLOA",
+            "Andrea Sofia PRINCIPE CARUAJULCA", "Paolo Facundo SUBAUSTE CHAVEZ",
+            "Mia Celeste VALDIVIA ALAMAS"
+        ];
+
+        let votos = JSON.parse(localStorage.getItem('votos_encuesta')) || {
+            encuesta1: {}, encuesta2: {}, encuesta3: {}, encuesta4: {}
+        };
+
+        function cargarAlumnos() {
+            document.querySelectorAll('select').forEach(select => {
+                alumnos.forEach(alumno => {
+                    const option = document.createElement('option');
+                    option.value = alumno;
+                    option.textContent = alumno;
+                    select.appendChild(option);
+                });
+            });
+        }
+
+        document.getElementById('encuestaForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            for (let i = 1; i <= 4; i++) {
+                const seleccionado = document.getElementById(`encuesta${i}`).value;
+                votos[`encuesta${i}`][seleccionado] = (votos[`encuesta${i}`][seleccionado] || 0) + 1;
+            }
+
+            localStorage.setItem('votos_encuesta', JSON.stringify(votos));
+            mostrarReporte();
+        });
+
+        function renderizarListaVotos(categoriaId, listaId) {
+            const ul = document.getElementById(listaId);
+            ul.innerHTML = '';
+            
+            const conteo = votos[categoriaId];
+            const entradas = Object.entries(conteo).sort((a, b) => b[1] - a[1]);
+
+            if (entradas.length === 0) {
+                ul.innerHTML = '<li><span>No hay votos registrados</span></li>';
+                return;
+            }
+
+            entradas.forEach(([nombre, cantidad]) => {
+                const li = document.createElement('li');
+                li.innerHTML = `<span>${nombre}</span> <span class="votos-num">${cantidad} voto${cantidad > 1 ? 's' : ''}</span>`;
+                ul.appendChild(li);
+            });
+        }
+
+        function mostrarReporte() {
+            document.getElementById('seccionEncuesta').style.display = 'none';
+            document.getElementById('reporte').style.display = 'block';
+
+            renderizarListaVotos('encuesta1', 'lista1');
+            renderizarListaVotos('encuesta2', 'lista2');
+            renderizarListaVotos('encuesta3', 'lista3');
+            renderizarListaVotos('encuesta4', 'lista4');
+        }
+
+        function volverAEncuestar() {
+            document.getElementById('encuestaForm').reset();
+            document.getElementById('seccionEncuesta').style.display = 'block';
+            document.getElementById('reporte').style.display = 'none';
+        }
+
+        function reiniciarConteo() {
+            if (confirm("¿Seguro que deseas reiniciar los votos acumulados?")) {
+                localStorage.removeItem('votos_encuesta');
+                votos = { encuesta1: {}, encuesta2: {}, encuesta3: {}, encuesta4: {} };
+                mostrarReporte();
+            }
+        }
+
+        cargarAlumnos();
+    </script>
+</body>
+</html>
